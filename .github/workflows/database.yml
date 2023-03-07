@@ -32,7 +32,7 @@ on:
 jobs:
   create-resource:
     runs-on: ubuntu-latest
-    if: ${{ inputs == 'create' }}
+    if: ${{ inputs.action == 'create' }}
     environment: 
       name: ${{ inputs.environment }}
       url: https://github.com
@@ -45,7 +45,7 @@ jobs:
       run: doctl databases create coreapi --engine pg --region nyc1 --size db-s-1vcpu-1gb --version 14
   delete-resource:
     runs-on: ubuntu-latest
-    if: ${{ inputs == 'delete' }}
+    if: ${{ inputs.action == 'delete' }}
     environment: 
       name: ${{ inputs.environment }}
       url: https://github.com
@@ -55,4 +55,4 @@ jobs:
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Create PostgreSQL Database
-      run: doctl databases delete ${{resourceId}}
+      run: doctl databases delete ${{ inputs.resourceId }}
