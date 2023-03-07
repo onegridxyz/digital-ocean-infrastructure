@@ -28,8 +28,8 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init
-      
+        run: terraform init -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
@@ -37,7 +37,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false
+        run: terraform plan -no-color -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
         continue-on-error: true
 
       - name: Update Pull Request
@@ -70,4 +70,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve -input=false
+        run: terraform apply -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}"
