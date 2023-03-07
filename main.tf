@@ -53,9 +53,9 @@ resource "digitalocean_app" "coreapi-app" {
       }
     }
     database {
-      name         = "coreapi"
-      engine       = "PG"
-      production   = false
+      name       = "coreapi"
+      engine     = "PG"
+      production = false
     }
   }
 }
