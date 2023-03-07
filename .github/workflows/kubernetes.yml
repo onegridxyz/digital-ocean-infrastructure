@@ -14,3 +14,5 @@ jobs:
       uses: digitalocean/action-doctl@v2
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Create PostgreSQL Database
+      run: doctl databases create coreapi --engine pg --region nyc1 --size db-s-1vcpu-1gb --version 14
