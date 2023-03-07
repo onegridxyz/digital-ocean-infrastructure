@@ -55,4 +55,4 @@ jobs:
       with:
         token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
     - name: Create PostgreSQL Database
-      run: doctl databases delete ${{ inputs.resourceId }}
+      run: doctl databases delete ${{ inputs.resourceId }} --force
