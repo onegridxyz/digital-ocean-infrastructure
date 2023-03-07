@@ -1,0 +1,58 @@
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Create/Delete'
+        required: true
+        default: 'create'
+        type: choice
+        options:
+        - create
+        - delete
+      resourceId:
+        description: 'Resource Id'
+        required: false
+      environment:
+        description: 'Environment to deploy'
+        type: environment
+        required: true
+        default: 'production-us'
+        options:
+        - production-us
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+
+jobs:
+  create-resource:
+    runs-on: ubuntu-latest
+    if: ${{ inputs == 'create' }}
+    environment: 
+      name: ${{ inputs.environment }}
+      url: https://github.com
+    steps:
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Create PostgreSQL Database
+      run: doctl databases create coreapi --engine pg --region nyc1 --size db-s-1vcpu-1gb --version 14
+  delete-resource:
+    runs-on: ubuntu-latest
+    if: ${{ inputs == 'delete' }}
+    environment: 
+      name: ${{ inputs.environment }}
+      url: https://github.com
+    steps:
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+    - name: Create PostgreSQL Database
+      run: doctl databases delete ${{resourceId}}
