@@ -47,8 +47,8 @@ resource "digitalocean_app" "coreapi-app" {
 
       image {
         registry_type = "DOCKER_HUB"
-        registry      = "hub.docker.com"
-        repository    = "travistrle/core-api"
+        registry      = "travistrle"
+        repository    = "core-api"
         tag           = "latest"
       }
     }
