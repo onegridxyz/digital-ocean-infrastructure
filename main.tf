@@ -13,21 +13,6 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-# resource "digitalocean_database_cluster" "onegrid-postgres" {
-#   name       = "onegrid-postgres-cluster"
-#   engine     = "pg"
-#   version    = "15"
-#   size       = "db-s-1vcpu-1gb"
-#   region     = "nyc1"
-#   node_count = 1
-#   private_network_uuid = "2ca1dbad-c865-42e2-b89b-b7a7ed3077b0"
-# }
-
-resource "digitalocean_database_db" "database-onegrid" {
-  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
-  name       = "onegrid"
-}
-
 resource "digitalocean_database_db" "onegrid-coreapi-database" {
   cluster_id = digitalocean_database_cluster.postgres-onegrid.id
   name       = "coreapi"
