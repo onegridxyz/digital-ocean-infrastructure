@@ -61,12 +61,12 @@ resource "digitalocean_app" "coreapi-app" {
 
     env {
       key   = "SPRING_DATASOURCE_URL"
-      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.private_host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
+      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
     }
 
     env {
       key   = "SPRING_LIQUIBASE_URL"
-      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.private_host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
+      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
     }
   }
 }
