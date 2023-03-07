@@ -14,16 +14,6 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-resource "digitalocean_database_db" "onegrid-coreapi-database" {
-  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
-  name       = "coreapi"
-}
-
-resource "digitalocean_database_user" "onegridapiuser" {
-  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
-  name       = "onegridapipostgresuser"
-}
-
 resource "digitalocean_database_cluster" "postgres-onegrid" {
   name       = "onegrid-postgres-cluster"
   engine     = "pg"
@@ -44,7 +34,8 @@ resource "digitalocean_app" "coreapi-app" {
       name           = "coreapi-app-service"
       http_port      = 8080
       instance_count = 1
-
+      # instance_size_slug: https://docs.digitalocean.com/reference/api/api-reference/#operation/apps_list_instanceSizes
+      instance_size_slug = "basic-xs"
 
       image {
         registry_type = "DOCKER_HUB"
