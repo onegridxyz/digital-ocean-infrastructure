@@ -56,8 +56,6 @@ resource "digitalocean_app" "coreapi-app" {
       name         = "coreapi"
       engine       = "PG"
       production   = false
-      cluster_name = "coreapi-cluster"
-      db_user      = "coreapiuser"
     }
   }
 }
