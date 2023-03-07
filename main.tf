@@ -13,24 +13,24 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-resource "digitalocean_database_db" "onegrid-coreapi-database" {
-  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
-  name       = "coreapi"
-}
+# resource "digitalocean_database_db" "onegrid-coreapi-database" {
+#   cluster_id = digitalocean_database_cluster.postgres-onegrid.id
+#   name       = "coreapi"
+# }
 
-resource "digitalocean_database_user" "onegridapiuser" {
-  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
-  name       = "onegridapipostgresuser"
-}
+# resource "digitalocean_database_user" "onegridapiuser" {
+#   cluster_id = digitalocean_database_cluster.postgres-onegrid.id
+#   name       = "onegridapipostgresuser"
+# }
 
-resource "digitalocean_database_cluster" "postgres-onegrid" {
-  name       = "onegrid-postgres-cluster"
-  engine     = "pg"
-  version    = "15"
-  size       = "db-s-1vcpu-1gb"
-  region     = "nyc1"
-  node_count = 1
-}
+# resource "digitalocean_database_cluster" "postgres-onegrid" {
+#   name       = "onegrid-postgres-cluster"
+#   engine     = "pg"
+#   version    = "15"
+#   size       = "db-s-1vcpu-1gb"
+#   region     = "nyc1"
+#   node_count = 1
+# }
 
 resource "digitalocean_app" "coreapi-app" {
   spec {
@@ -40,14 +40,26 @@ resource "digitalocean_app" "coreapi-app" {
     # domain
 
     service {
-      name      = "docs-page-docker-app-image"
-      http_port = 8080
+      name           = "coreapi-app-service"
+      http_port      = 8080
+      instance_count = 1
+
 
       image {
         registry_type = "DOCKER_HUB"
+        registry      = "hub.docker.com"
         repository    = "travistrle/core-api"
         tag           = "latest"
       }
     }
+    # database {
+    #   name       = "coreapi-db"
+    #   engine     = "PG"
+    #   production = false
+    #   version = "15"
+    #   cluster_name = "coreapi-cluster"
+    #   db_name = "coreapi"
+    #   db_user = "coreapiuser"
+    # }
   }
 }
