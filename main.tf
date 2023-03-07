@@ -31,3 +31,23 @@ resource "digitalocean_database_cluster" "postgres-onegrid" {
   region     = "nyc1"
   node_count = 1
 }
+
+resource "digitalocean_app" "coreapi-app" {
+  spec {
+    name   = "coreapi-app"
+    region = "nyc1"
+
+    # domain
+
+    service {
+      name      = "docs-page-docker-app-image"
+      http_port = 8080
+
+      image {
+        registry_type = "DOCKER_HUB"
+        repository    = "travistrle/core-api"
+        tag           = "latest"
+      }
+    }
+  }
+}
