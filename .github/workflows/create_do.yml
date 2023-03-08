@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Create Resources with Terraform"
 
 on:
   workflow_dispatch:
@@ -12,9 +12,6 @@ on:
           - info
           - warning
           - debug
-  push:
-    branches:
-      - main
   pull_request:
 
 jobs:
