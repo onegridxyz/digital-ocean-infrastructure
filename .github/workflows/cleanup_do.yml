@@ -1,4 +1,4 @@
-name: "Clean Up"
+name: "Clean Up Resources"
 
 on:
   schedule:
