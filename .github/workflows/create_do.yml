@@ -1,4 +1,4 @@
-name: "Create Resources with Terraform"
+name: "Create Resources"
 
 on:
   workflow_dispatch:
