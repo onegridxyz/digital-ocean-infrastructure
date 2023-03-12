@@ -14,6 +14,15 @@ provider "digitalocean" {
   token = var.do_token
 }
 
+resource "digitalocean_database_connection_pool" "pool-onegrid" {
+  cluster_id = digitalocean_database_cluster.postgres-onegrid.id
+  name       = "pool-onegrid"
+  mode       = "transaction"
+  size       = 22
+  db_name    = "defaultdb"
+  user       = "doadmin"
+}
+
 resource "digitalocean_database_cluster" "postgres-onegrid" {
   name       = "onegrid-postgres-cluster"
   engine     = "pg"
@@ -52,12 +61,12 @@ resource "digitalocean_app" "coreapi-app" {
 
     env {
       key   = "SPRING_DATASOURCE_URL"
-      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
+      value = "jdbc:postgresql://${digitalocean_database_connection_pool.pool-onegrid.host}:${digitalocean_database_connection_pool.pool-onegrid.port}/pool-onegrid?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
     }
 
     env {
       key   = "SPRING_LIQUIBASE_URL"
-      value = "jdbc:postgresql://${digitalocean_database_cluster.postgres-onegrid.host}:${digitalocean_database_cluster.postgres-onegrid.port}/${digitalocean_database_cluster.postgres-onegrid.database}?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
+      value = "jdbc:postgresql://${digitalocean_database_connection_pool.pool-onegrid.host}:${digitalocean_database_connection_pool.pool-onegrid.port}/pool-onegrid?user=${digitalocean_database_cluster.postgres-onegrid.user}&password=${digitalocean_database_cluster.postgres-onegrid.password}&prepareThreshold=0"
     }
   }
 }
