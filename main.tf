@@ -70,3 +70,21 @@ resource "digitalocean_app" "coreapi-app" {
     }
   }
 }
+
+resource "digitalocean_app" "customer-portal" {
+  spec {
+    name   = "customer-portal"
+    region = "nyc"
+
+    static_site {
+      name          = "customer-portal"
+      build_command = "npm run build"
+      output_dir    = "/dist/customer-portal"
+
+      github {
+        repo   = "onegridxyz/customer-portal"
+        branch = "main"
+      }
+    }
+  }
+}
