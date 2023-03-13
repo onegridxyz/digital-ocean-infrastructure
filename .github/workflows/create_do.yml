@@ -78,4 +78,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
+        run: terraform apply target=module.mainresource -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
