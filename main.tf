@@ -38,6 +38,7 @@ resource "digitalocean_app" "coreapi-app" {
     region = "nyc1"
     domain {
       name = "gateway.onegrid.xyz"
+      zone = "onegrid.xyz"
     }
     service {
       name           = "coreapi-app-service"
@@ -77,6 +78,7 @@ resource "digitalocean_app" "customer-portal" {
     region = "nyc"
     domain {
       name = "app.onegrid.xyz"
+      zone = "onegrid.xyz"
     }
     static_site {
       name = "customer-portal"
