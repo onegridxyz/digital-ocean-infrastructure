@@ -80,8 +80,9 @@ resource "digitalocean_app" "customer-portal" {
       name = "customer-portal"
 
       github {
-        repo   = "onegridxyz/customer-portal-deploy"
-        branch = "main"
+        repo           = "onegridxyz/customer-portal-deploy"
+        branch         = "main"
+        deploy_on_push = true
       }
 
       env {
