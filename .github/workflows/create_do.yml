@@ -3,15 +3,14 @@ name: "Create Resources"
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: "Log level"
+      resourceTypes:
+        description: "Resource Types"
         required: true
-        default: "warning"
+        default: "main"
         type: choice
         options:
-          - info
-          - warning
-          - debug
+          - main
+          - dns
   pull_request:
 
 jobs:
@@ -76,6 +75,10 @@ jobs:
         if: steps.plan.outcome == 'failure'
         run: exit 1
 
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+      - name: Terraform Apply Main Resources
+        if: ${{ github.ref == 'refs/heads/main' && github.event.inputs.resourceTypes == 'main' }}
         run: terraform apply -target=module.mainresources -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
+
+      - name: Terraform Apply Main Resources
+        if: ${{ github.ref == 'refs/heads/main' && github.event.inputs.resourceTypes == 'dns' }}
+        run: terraform apply -target=module.digitaloceandns -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"

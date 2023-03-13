@@ -1,4 +1,4 @@
-name: "Clean Up Resources"
+name: "Clean Up Dns Resources"
 
 on:
   schedule:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   clean_up_resource:
-    name: "Clean Up Resource"
+    name: "Clean Up Dns Resource"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,7 +26,5 @@ jobs:
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-      - name: Delete app
-        run: doctl apps list | awk '{print $1}' | awk 'NR!=1 {print}' | xargs doctl apps delete -f
-      - name: Delete database
-        run: doctl databases list | awk '{print $1}' | awk 'NR!=1 {print}' | xargs doctl databases delete -f
+      - name: Delete DNS
+        run: doctl compute domain list | awk '{print $1}' | awk 'NR!=1 {print}' | xargs doctl compute domain delete -f
