@@ -96,3 +96,17 @@ resource "digitalocean_app" "customer-portal" {
     }
   }
 }
+
+resource "digitalocean_record" "coreapi-ns-record" {
+  domain = "onegrid.xyz"
+  type   = "NS"
+  name   = "app"
+  value  = digitalocean_app.coreapi-app.live_url
+}
+
+resource "digitalocean_record" "customer-portal-ns-record" {
+  domain = "onegrid.xyz"
+  type   = "NS"
+  name   = "app"
+  value  = digitalocean_app.customer-portal.live_url
+}
