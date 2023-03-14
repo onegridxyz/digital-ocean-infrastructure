@@ -36,10 +36,9 @@ resource "digitalocean_app" "coreapi-app" {
   spec {
     name   = "coreapi-app"
     region = "nyc1"
-    # domain {
-    #   name = "gateway.onegrid.xyz"
-    #   zone = "onegrid.xyz"
-    # }
+    domain {
+      name = "api.onegrid.xyz"
+    }
     service {
       name           = "coreapi-app-service"
       http_port      = 8080
@@ -76,9 +75,9 @@ resource "digitalocean_app" "customer-portal" {
   spec {
     name   = "customer-portal"
     region = "nyc"
-    # domain {
-    #   name = "app.onegrid.xyz"
-    # }
+    domain {
+      name = "app.onegrid.xyz"
+    }
     static_site {
       name = "customer-portal"
 
