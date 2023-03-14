@@ -36,10 +36,10 @@ resource "digitalocean_app" "coreapi-app" {
   spec {
     name   = "coreapi-app"
     region = "nyc1"
-    domain {
-      name = "gateway.onegrid.xyz"
-      zone = "onegrid.xyz"
-    }
+    # domain {
+    #   name = "gateway.onegrid.xyz"
+    #   zone = "onegrid.xyz"
+    # }
     service {
       name           = "coreapi-app-service"
       http_port      = 8080
@@ -76,10 +76,9 @@ resource "digitalocean_app" "customer-portal" {
   spec {
     name   = "customer-portal"
     region = "nyc"
-    domain {
-      name = "app.onegrid.xyz"
-      zone = "onegrid.xyz"
-    }
+    # domain {
+    #   name = "app.onegrid.xyz"
+    # }
     static_site {
       name = "customer-portal"
 
@@ -97,16 +96,16 @@ resource "digitalocean_app" "customer-portal" {
   }
 }
 
-resource "digitalocean_record" "coreapi-ns-record" {
-  domain = "onegrid.xyz"
-  type   = "NS"
-  name   = "app"
-  value  = digitalocean_app.coreapi-app.live_url
-}
+# resource "digitalocean_record" "coreapi-ns-record" {
+#   domain = "onegrid.xyz"
+#   type   = "NS"
+#   name   = "app"
+#   value  = digitalocean_app.coreapi-app.live_url
+# }
 
-resource "digitalocean_record" "customer-portal-ns-record" {
-  domain = "onegrid.xyz"
-  type   = "NS"
-  name   = "app"
-  value  = digitalocean_app.customer-portal.live_url
-}
+# resource "digitalocean_record" "customer-portal-ns-record" {
+#   domain = "onegrid.xyz"
+#   type   = "NS"
+#   name   = "app"
+#   value  = digitalocean_app.customer-portal.live_url
+# }
