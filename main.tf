@@ -37,7 +37,7 @@ resource "digitalocean_app" "coreapi-app" {
     name   = "coreapi-app"
     region = "nyc1"
     domain {
-      name = "api.onegrid.xyz"
+      name = "gateway.onegrid.xyz"
       zone = "onegrid.xyz"
     }
     service {
@@ -77,7 +77,7 @@ resource "digitalocean_app" "customer-portal" {
     name   = "customer-portal"
     region = "nyc"
     domain {
-      name = "app.onegrid.xyz"
+      name = "www.onegrid.xyz"
       zone = "onegrid.xyz"
     }
     static_site {
@@ -96,17 +96,3 @@ resource "digitalocean_app" "customer-portal" {
     }
   }
 }
-
-# resource "digitalocean_record" "coreapi-ns-record" {
-#   domain = "onegrid.xyz"
-#   type   = "CNAME"
-#   name   = "app"
-#   value  = digitalocean_app.coreapi-app.live_url
-# }
-
-# resource "digitalocean_record" "customer-portal-ns-record" {
-#   domain = "onegrid.xyz"
-#   type   = "CNAME"
-#   name   = "app"
-#   value  = digitalocean_app.customer-portal.live_url
-# }
