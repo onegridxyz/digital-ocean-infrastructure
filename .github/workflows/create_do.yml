@@ -36,7 +36,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
+        run: terraform init -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}" -var="logTailApiKey=${{ secrets.LOGTAIL_APIKEY }}"
 
       - name: Terraform Validate
         id: validate
@@ -45,7 +45,7 @@ jobs:
       - name: Terraform Plan
         id: plan
         if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
+        run: terraform plan -no-color -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}" -var="logTailApiKey=${{ secrets.LOGTAIL_APIKEY }}"
         continue-on-error: true
 
       - name: Update Pull Request
@@ -78,4 +78,4 @@ jobs:
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}"
+        run: terraform apply -auto-approve -input=false -var="do_token=${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}" -var="jwtBaseSecret=${{ secrets.JWT_SECRET }}" -var="logTailApiKey=${{ secrets.LOGTAIL_APIKEY }}"

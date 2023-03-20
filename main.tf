@@ -9,6 +9,7 @@ terraform {
 
 variable "do_token" {}
 variable "jwtBaseSecret" {}
+variable "logTailApiKey" {}
 
 provider "digitalocean" {
   token = var.do_token
@@ -52,6 +53,13 @@ resource "digitalocean_app" "coreapi-app" {
         registry      = "travistrle"
         repository    = "core-api"
         tag           = "latest"
+      }
+
+      log_destination {
+        name = "coreApiLogTail"
+        logtail {
+          token = var.logTailApiKey
+        }
       }
     }
 
