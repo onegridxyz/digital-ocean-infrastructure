@@ -81,7 +81,11 @@ resource "digitalocean_app" "customer-portal" {
       zone = "onegrid.xyz"
     }
     static_site {
-      name = "customer-portal"
+      name              = "customer-portal"
+      catchall_document = "index.html"
+      routes {
+        path = "/"
+      }
 
       github {
         repo           = "onegridxyz/customer-portal-deploy"
