@@ -127,7 +127,7 @@ resource "digitalocean_app" "one-app" {
         path = "/"
       }
       build_command = "npm run build"
-      run_command   = "npm run start"
+      run_command   = "npm run start:prod"
       http_port     = 4200
 
       github {
