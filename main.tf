@@ -85,7 +85,7 @@ resource "digitalocean_app" "customer-portal" {
     name   = "customer-portal"
     region = "nyc"
     domain {
-      name = "www.onegrid.xyz"
+      name = "playground.onegrid.xyz"
       zone = "onegrid.xyz"
     }
     static_site {
@@ -113,9 +113,9 @@ resource "digitalocean_app" "customer-portal" {
 resource "digitalocean_app" "one-app" {
   spec {
     name   = "one-app"
-    region = "nyc"
+    region = "nyc1"
     domain {
-      name = "app.onegrid.xyz"
+      name = "www.onegrid.xyz"
       zone = "onegrid.xyz"
     }
     service {
@@ -123,17 +123,15 @@ resource "digitalocean_app" "one-app" {
       instance_count = 1
       # instance_size_slug: https://docs.digitalocean.com/reference/api/api-reference/#operation/apps_list_instanceSizes
       instance_size_slug = "basic-xxs"
-      routes {
-        path = "/"
+      image {
+        registry_type = "DOCKER_HUB"
+        registry      = "travistrle"
+        repository    = "one-app"
+        tag           = "latest"
       }
-      build_command = "npm run build"
-      run_command   = "npm run start:prod"
-      http_port     = 4200
-
-      github {
-        repo           = "onegridxyz/one-app"
-        branch         = "main"
-        deploy_on_push = true
+      env {
+        key   = "CORE_API_URL"
+        value = digitalocean_app.coreapi-app.live_url
       }
     }
   }
