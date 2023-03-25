@@ -108,3 +108,33 @@ resource "digitalocean_app" "customer-portal" {
     }
   }
 }
+
+
+resource "digitalocean_app" "one-app" {
+  spec {
+    name   = "one-app"
+    region = "nyc"
+    domain {
+      name = "app.onegrid.xyz"
+      zone = "onegrid.xyz"
+    }
+    service {
+      name           = "one-app-service"
+      instance_count = 1
+      # instance_size_slug: https://docs.digitalocean.com/reference/api/api-reference/#operation/apps_list_instanceSizes
+      instance_size_slug = "basic-xxs"
+      routes {
+        path = "/"
+      }
+      build_command = "npm run build"
+      run_command   = "npm run start"
+      http_port     = 4200
+
+      github {
+        repo           = "onegridxyz/one-app"
+        branch         = "main"
+        deploy_on_push = true
+      }
+    }
+  }
+}
